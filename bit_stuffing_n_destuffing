@@ -1,0 +1,32 @@
+# BIT_STUFFINGTG
+n=input().split('1 1 1 1 1')
+n1=""
+l=len(n)
+for i in range(l):
+    if i!=(l-1):
+        n[i]=n[i]+'1 1 1 1 1 0'
+        n1=n1+n[i]
+    elif( n[l-1]=="1 1 1 1 1"):
+        n[i]=n[i]+'1 1 1 1 1 0'
+        n1=n1+n[i]
+    else:
+        n1=n1+n[i]
+f="0 1 1 1 1 1 0"
+nf=f+" "+n1+" "+f
+print("data after stuffing")
+print(nf)
+n2=""
+# BIT_DESTUFFING
+g=n1.split("1 1 1 1 1 0")
+for i in range(len(g)):
+    if i!=(l-1):
+        g[i]+='1 1 1 1 1'
+        n2+=g[i]
+    elif( g[l-1]=="1 1 1 1 1 0"):
+        n2[i]+='1 1 1 1 1'
+        n2+=g[i]
+    else:
+        n2+=g[i]
+print("data after destuffing")
+for i in n2:
+    print(i,end="")
