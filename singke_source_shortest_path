@@ -1,0 +1,49 @@
+def initialize_graph():
+    graph = {}
+    while True:
+        edge = input("Enter edge in the format 'start end weight', type 'done' to finish: ")
+        if edge == 'done':
+            break
+        start, end, weight = edge.split()
+        weight = int(weight)
+        if start not in graph:
+            graph[start] = {}
+        graph[start][end] = weight
+    return graph
+
+
+def shortest_path(graph, start, end):
+    distances = {node: float('inf') for node in graph}
+    parent_nodes = {node: None for node in graph}
+    distances[start] = 0
+    unvisited_nodes = list(graph)
+
+    while unvisited_nodes:
+        current_node = min(unvisited_nodes, key=lambda node: distances[node])
+        unvisited_nodes.remove(current_node)
+        for child, weight in graph.get(current_node, {}).items():
+            min_distance = distances[current_node] + weight
+            if min_distance < distances.get(child, float('inf')):
+                distances[child] = min_distance
+                parent_nodes[child] = current_node
+
+    path = []
+    current_node = end
+    while current_node != start:
+        path.insert(0, current_node)
+        current_node = parent_nodes[current_node]
+    path.insert(0, start)
+    return path, distances[end]
+
+
+graph = initialize_graph()
+
+start_node = input("Enter the start node: ")
+end_node = input("Enter the end node: ")
+
+path, total_weight = shortest_path(graph, start_node, end_node)
+if path:
+    print("Shortest Path:", ' -> '.join(path))
+    print("Total Weight:", total_weight)
+else:
+    print("No path found.")
